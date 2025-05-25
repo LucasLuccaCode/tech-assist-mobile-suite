@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,23 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				tech: {
+					50: '#0a0a0f',
+					100: '#0f0f1a',
+					200: '#1a1a2e',
+					300: '#16213e',
+					400: '#0f3460',
+					500: '#533483',
+					600: '#7209b7',
+					700: '#a663cc',
+					800: '#c9a9dd',
+					900: '#e4d4f4',
+				},
+				cyan: {
+					400: '#22d3ee',
+					500: '#06b6d4',
+					600: '#0891b2',
 				}
 			},
 			borderRadius: {
@@ -84,11 +102,25 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'pulse-glow': {
+					'0%, 100%': { 
+						boxShadow: '0 0 20px rgba(34, 211, 238, 0.4)' 
+					},
+					'50%': { 
+						boxShadow: '0 0 30px rgba(34, 211, 238, 0.8)' 
+					}
+				},
+				'scan': {
+					'0%': { transform: 'translateX(-100%)' },
+					'100%': { transform: 'translateX(100%)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+				'scan': 'scan 2s ease-in-out infinite'
 			}
 		}
 	},
