@@ -130,7 +130,7 @@ export const ClearCacheTab = ({ processingQueue, addToQueue }: ClearCacheTabProp
               onClick={selectHighCache}
               className="text-xs"
             >
-              >100MB
+              &gt;100MB
             </Button>
             <Button 
               variant="outline" 
