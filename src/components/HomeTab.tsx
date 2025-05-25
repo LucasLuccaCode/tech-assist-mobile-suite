@@ -5,9 +5,11 @@ import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { Clock, Plus, Calendar, X, Trash2, Play } from 'lucide-react';
 import { mockScheduledCleans, mockApps } from '@/data/mockApps';
 import { ProcessingQueue } from '@/types/app';
 import { AppSelectionDialog } from './AppSelectionDialog';
+import { ScheduleModal } from './ScheduleModal';
 
 interface HomeTabProps {
   addToQueue: (items: ProcessingQueue[]) => void;
@@ -15,7 +17,7 @@ interface HomeTabProps {
 
 export const HomeTab = ({ addToQueue }: HomeTabProps) => {
   const [schedules, setSchedules] = useState(mockScheduledCleans);
-  const [selectedSchedule, setSelectedSchedule] = useState<string | null>(null);
+  const [showScheduleModal, setShowScheduleModal] = useState(false);
   const [showAppSelection, setShowAppSelection] = useState(false);
   const [cleanOptions, setCleanOptions] = useState({
     cache: false,
@@ -67,32 +69,46 @@ export const HomeTab = ({ addToQueue }: HomeTabProps) => {
     setCleanOptions({ cache: false, apps: false });
   };
 
+  const handleScheduleCreate = (newSchedule: any) => {
+    setSchedules(prev => [...prev, newSchedule]);
+  };
+
   const getStatusColor = (enabled: boolean) => 
-    enabled ? 'bg-green-500/20 text-green-400' : 'bg-gray-500/20 text-gray-400';
+    enabled ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600';
 
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case 'cache': return '🧹';
-      case 'apps': return '🔄';
-      case 'both': return '⚡';
-      default: return '📱';
+      case 'cache': return <Trash2 className="w-4 h-4" />;
+      case 'apps': return <X className="w-4 h-4" />;
+      case 'both': return <Play className="w-4 h-4" />;
+      default: return <Calendar className="w-4 h-4" />;
     }
+  };
+
+  const formatDays = (days: string[]) => {
+    const dayMap: { [key: string]: string } = {
+      'mon': 'Seg', 'tue': 'Ter', 'wed': 'Qua', 'thu': 'Qui',
+      'fri': 'Sex', 'sat': 'Sáb', 'sun': 'Dom'
+    };
+    return days.map(day => dayMap[day] || day).join(', ');
   };
 
   return (
     <div className="space-y-4">
       {/* Quick Actions */}
-      <Card className="bg-gradient-to-r from-tech-200/50 to-tech-300/50 border-tech-400/30">
+      <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
         <CardHeader className="pb-3">
-          <CardTitle className="text-lg flex items-center">
-            ⚡ Limpeza Rápida
+          <CardTitle className="text-lg flex items-center text-blue-800">
+            <Play className="w-5 h-5 mr-2" />
+            Limpeza Rápida
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
-                <span className="text-sm">🧹 Limpar Cache</span>
+                <Trash2 className="w-4 h-4 text-blue-600" />
+                <span className="text-sm">Limpar Cache</span>
               </div>
               <Switch 
                 checked={cleanOptions.cache}
@@ -104,7 +120,8 @@ export const HomeTab = ({ addToQueue }: HomeTabProps) => {
 
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
-                <span className="text-sm">🔄 Encerrar Apps</span>
+                <X className="w-4 h-4 text-red-600" />
+                <span className="text-sm">Encerrar Apps</span>
               </div>
               <Switch 
                 checked={cleanOptions.apps}
@@ -128,10 +145,11 @@ export const HomeTab = ({ addToQueue }: HomeTabProps) => {
               
               <Button 
                 onClick={handleQuickClean}
-                className="w-full bg-gradient-to-r from-cyan-500 to-tech-600 hover:from-cyan-600 hover:to-tech-700"
+                className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700"
                 disabled={!cleanOptions.cache && !cleanOptions.apps}
               >
-                🚀 Iniciar Limpeza
+                <Play className="w-4 h-4 mr-2" />
+                Iniciar Limpeza
               </Button>
             </div>
           )}
@@ -139,31 +157,46 @@ export const HomeTab = ({ addToQueue }: HomeTabProps) => {
       </Card>
 
       {/* Scheduled Cleanings */}
-      <Card className="bg-card/80 border-border/50">
+      <Card className="bg-white/80 border-gray-200">
         <CardHeader className="pb-3">
-          <CardTitle className="text-lg flex items-center">
-            📅 Agendamentos
-          </CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-lg flex items-center text-gray-800">
+              <Calendar className="w-5 h-5 mr-2" />
+              Agendamentos
+            </CardTitle>
+            <Button 
+              onClick={() => setShowScheduleModal(true)}
+              size="sm"
+              className="bg-gradient-to-r from-green-500 to-green-600"
+            >
+              <Plus className="w-4 h-4 mr-1" />
+              Novo
+            </Button>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
             {schedules.map((schedule, index) => (
               <div key={schedule.id}>
-                <div className="flex items-center justify-between p-3 rounded-lg bg-muted/30 backdrop-blur-sm scan-effect">
+                <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
                   <div className="flex-1">
                     <div className="flex items-center space-x-2 mb-1">
-                      <span className="text-lg">{getTypeIcon(schedule.type)}</span>
-                      <span className="font-medium text-sm">{schedule.name}</span>
+                      {getTypeIcon(schedule.type)}
+                      <span className="font-medium text-sm text-gray-800">{schedule.name}</span>
                       <Badge className={getStatusColor(schedule.enabled)}>
                         {schedule.enabled ? 'Ativo' : 'Inativo'}
                       </Badge>
                     </div>
-                    <p className="text-xs text-muted-foreground">
-                      {schedule.schedule}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      {schedule.selectedApps.length} apps selecionados
-                    </p>
+                    <div className="text-xs text-gray-600 space-y-1">
+                      <div className="flex items-center space-x-1">
+                        <Clock className="w-3 h-3" />
+                        <span>{schedule.schedule}</span>
+                      </div>
+                      {schedule.days && (
+                        <div>Dias: {formatDays(schedule.days)}</div>
+                      )}
+                      <div>{schedule.selectedApps.length} apps selecionados</div>
+                    </div>
                   </div>
                   <Switch 
                     checked={schedule.enabled}
@@ -178,20 +211,20 @@ export const HomeTab = ({ addToQueue }: HomeTabProps) => {
       </Card>
 
       {/* System Stats */}
-      <Card className="bg-gradient-to-r from-tech-300/30 to-tech-400/30 border-tech-500/30">
+      <Card className="bg-gradient-to-r from-gray-50 to-gray-100 border-gray-200">
         <CardContent className="pt-4">
           <div className="grid grid-cols-2 gap-4 text-center">
             <div>
-              <div className="text-xl font-bold text-cyan-400">
+              <div className="text-xl font-bold text-blue-600">
                 {mockApps.filter(app => app.isRunning).length}
               </div>
-              <div className="text-xs text-muted-foreground">Apps Ativos</div>
+              <div className="text-xs text-gray-600">Apps Ativos</div>
             </div>
             <div>
-              <div className="text-xl font-bold text-cyan-400">
+              <div className="text-xl font-bold text-blue-600">
                 {mockApps.reduce((acc, app) => acc + parseInt(app.cacheSize || '0'), 0)} MB
               </div>
-              <div className="text-xs text-muted-foreground">Cache Total</div>
+              <div className="text-xs text-gray-600">Cache Total</div>
             </div>
           </div>
         </CardContent>
@@ -201,6 +234,12 @@ export const HomeTab = ({ addToQueue }: HomeTabProps) => {
         open={showAppSelection}
         onOpenChange={setShowAppSelection}
         onSelectionComplete={() => setShowAppSelection(false)}
+      />
+
+      <ScheduleModal 
+        open={showScheduleModal}
+        onOpenChange={setShowScheduleModal}
+        onScheduleCreate={handleScheduleCreate}
       />
     </div>
   );

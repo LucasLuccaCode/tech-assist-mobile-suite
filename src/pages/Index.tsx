@@ -39,48 +39,48 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-tech-50 via-tech-100 to-tech-200 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
       <div className="max-w-md mx-auto">
         {/* Header */}
         <div className="text-center mb-6">
           <div className="flex items-center justify-center mb-2">
-            <div className="w-8 h-8 bg-gradient-to-r from-cyan-400 to-tech-600 rounded-lg mr-3 flex items-center justify-center animate-pulse-glow">
+            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg mr-3 flex items-center justify-center shadow-lg">
               <span className="text-white font-bold">⚡</span>
             </div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-tech-600 bg-clip-text text-transparent">
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
               App Tools
             </h1>
           </div>
-          <p className="text-muted-foreground text-sm">
+          <p className="text-gray-600 text-sm">
             Advanced Android Management System
           </p>
         </div>
 
         {/* Main Content */}
-        <Card className="bg-card/80 backdrop-blur-sm border-border/50 shadow-2xl">
+        <Card className="bg-white/90 backdrop-blur-sm border-gray-200 shadow-xl">
           <Tabs defaultValue="home" className="w-full">
-            <TabsList className="grid w-full grid-cols-4 bg-muted/50 backdrop-blur-sm">
+            <TabsList className="grid w-full grid-cols-4 bg-gray-100/80 backdrop-blur-sm">
               <TabsTrigger 
                 value="home" 
-                className="text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                className="text-xs data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm"
               >
                 🏠 Home
               </TabsTrigger>
               <TabsTrigger 
                 value="kill" 
-                className="text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                className="text-xs data-[state=active]:bg-white data-[state=active]:text-red-600 data-[state=active]:shadow-sm"
               >
                 🔄 Kill
               </TabsTrigger>
               <TabsTrigger 
                 value="cache" 
-                className="text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                className="text-xs data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm"
               >
                 🧹 Cache
               </TabsTrigger>
               <TabsTrigger 
                 value="settings" 
-                className="text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                className="text-xs data-[state=active]:bg-white data-[state=active]:text-gray-700 data-[state=active]:shadow-sm"
               >
                 ⚙️ Config
               </TabsTrigger>
@@ -114,9 +114,9 @@ const Index = () => {
 
         {/* Status Bar */}
         <div className="mt-4 text-center">
-          <div className="inline-flex items-center space-x-2 bg-muted/30 backdrop-blur-sm px-3 py-1 rounded-full text-xs">
+          <div className="inline-flex items-center space-x-2 bg-white/60 backdrop-blur-sm px-3 py-1 rounded-full text-xs shadow-sm border border-gray-200">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <span className="text-muted-foreground">ADB Connected</span>
+            <span className="text-gray-700">ADB Connected</span>
           </div>
         </div>
       </div>
