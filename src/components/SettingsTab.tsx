@@ -12,7 +12,6 @@ import {
   Shield, 
   Zap, 
   Battery, 
-  Search, 
   Settings, 
   Smartphone, 
   HardDrive, 
@@ -73,23 +72,12 @@ export const SettingsTab = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header with Search */}
-      <div className="relative">
-        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
-        <input
-          type="text"
-          placeholder="Configurações"
-          className="w-full bg-green-600/20 border border-green-500/30 rounded-2xl pl-12 pr-4 py-4 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50"
-          readOnly
-        />
-      </div>
-
       {/* Connection Status */}
-      <Card className="bg-gradient-to-r from-green-600/10 to-slate-700/20 border-green-500/30 rounded-2xl">
+      <Card className="bg-slate-900 border-slate-700">
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-lg bg-green-600 flex items-center justify-center">
                 <Wifi className="w-6 h-6 text-white" />
               </div>
               <div>
@@ -107,8 +95,8 @@ export const SettingsTab = () => {
       </Card>
 
       {/* Automation Settings */}
-      <Card className="bg-slate-800/30 border-slate-700/50 rounded-2xl">
-        <CardHeader className="pb-4">
+      <Card className="bg-slate-900 border-slate-700">
+        <CardHeader>
           <CardTitle className="text-lg flex items-center text-white">
             <Zap className="w-5 h-5 mr-3 text-yellow-400" />
             Automação
@@ -146,7 +134,7 @@ export const SettingsTab = () => {
             />
           </div>
 
-          <Separator className="bg-slate-700/50" />
+          <Separator className="bg-slate-700" />
 
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
@@ -183,8 +171,8 @@ export const SettingsTab = () => {
       </Card>
 
       {/* Performance Settings */}
-      <Card className="bg-slate-800/30 border-slate-700/50 rounded-2xl">
-        <CardHeader className="pb-4">
+      <Card className="bg-slate-900 border-slate-700">
+        <CardHeader>
           <CardTitle className="text-lg flex items-center text-white">
             <Zap className="w-5 h-5 mr-3 text-orange-400" />
             Performance
@@ -206,7 +194,7 @@ export const SettingsTab = () => {
             />
           </div>
 
-          <Separator className="bg-slate-700/50" />
+          <Separator className="bg-slate-700" />
 
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
@@ -259,8 +247,8 @@ export const SettingsTab = () => {
       </Card>
 
       {/* System Settings */}
-      <Card className="bg-slate-800/30 border-slate-700/50 rounded-2xl">
-        <CardHeader className="pb-4">
+      <Card className="bg-slate-900 border-slate-700">
+        <CardHeader>
           <CardTitle className="text-lg flex items-center text-white">
             <Settings className="w-5 h-5 mr-3 text-slate-400" />
             Sistema
@@ -306,7 +294,7 @@ export const SettingsTab = () => {
         <Button 
           variant="outline"
           onClick={exportSettings}
-          className="flex items-center justify-center space-x-2 bg-slate-800/50 border-slate-600/50 text-slate-300 hover:bg-slate-700/50 hover:text-white py-3 rounded-xl"
+          className="flex items-center justify-center space-x-2 bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white py-3"
         >
           <Download className="w-4 h-4" />
           <span>Exportar</span>
@@ -314,7 +302,7 @@ export const SettingsTab = () => {
         <Button 
           variant="outline"
           onClick={resetSettings}
-          className="flex items-center justify-center space-x-2 bg-slate-800/50 border-slate-600/50 text-slate-300 hover:bg-slate-700/50 hover:text-white py-3 rounded-xl"
+          className="flex items-center justify-center space-x-2 bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white py-3"
         >
           <RotateCcw className="w-4 h-4" />
           <span>Reset</span>
@@ -322,8 +310,8 @@ export const SettingsTab = () => {
       </div>
 
       {/* System Info */}
-      <Card className="bg-gradient-to-r from-slate-800/40 to-slate-700/40 border-slate-600/50 rounded-2xl">
-        <CardHeader className="pb-4">
+      <Card className="bg-slate-900 border-slate-700">
+        <CardHeader>
           <CardTitle className="text-lg flex items-center text-white">
             <Smartphone className="w-5 h-5 mr-3 text-cyan-400" />
             Informações do Sistema
@@ -333,23 +321,23 @@ export const SettingsTab = () => {
           <div className="space-y-4 text-sm">
             <div className="flex justify-between items-center">
               <span className="text-slate-400">Versão App Tools</span>
-              <span className="font-mono text-white bg-slate-700/50 px-2 py-1 rounded">v2.1.0</span>
+              <span className="font-mono text-white bg-slate-800 px-2 py-1 rounded">v2.1.0</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-slate-400">ADB Version</span>
-              <span className="font-mono text-white bg-slate-700/50 px-2 py-1 rounded">1.0.41</span>
+              <span className="font-mono text-white bg-slate-800 px-2 py-1 rounded">1.0.41</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-slate-400">Device API</span>
-              <span className="font-mono text-white bg-slate-700/50 px-2 py-1 rounded">Android 13 (API 33)</span>
+              <span className="font-mono text-white bg-slate-800 px-2 py-1 rounded">Android 13 (API 33)</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-slate-400">Comandos Executados</span>
-              <span className="font-mono text-green-400 bg-slate-700/50 px-2 py-1 rounded">1,247</span>
+              <span className="font-mono text-green-400 bg-slate-800 px-2 py-1 rounded">1,247</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-slate-400">Cache Limpo</span>
-              <span className="font-mono text-purple-400 bg-slate-700/50 px-2 py-1 rounded">15.6 GB</span>
+              <span className="font-mono text-purple-400 bg-slate-800 px-2 py-1 rounded">15.6 GB</span>
             </div>
           </div>
         </CardContent>
