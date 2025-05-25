@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { X, Play, CheckSquare, Square } from 'lucide-react';
+import { X, Play, CheckSquare, Square, Minus, Check, Search, Smartphone } from 'lucide-react';
 import { mockApps } from '@/data/mockApps';
 import { ProcessingQueue } from '@/types/app';
 
@@ -54,7 +54,6 @@ export const KillAppsTab = ({ processingQueue, addToQueue }: KillAppsTabProps) =
     setSelectedApps([]);
     setShowProcessingModal(true);
     
-    // Fechar modal após processamento
     setTimeout(() => {
       setShowProcessingModal(false);
     }, 5000);
@@ -72,95 +71,112 @@ export const KillAppsTab = ({ processingQueue, addToQueue }: KillAppsTabProps) =
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'pending': return 'bg-amber-100 text-amber-700';
-      case 'processing': return 'bg-blue-100 text-blue-700';
-      case 'completed': return 'bg-green-100 text-green-700';
-      case 'failed': return 'bg-red-100 text-red-700';
-      default: return 'bg-gray-100 text-gray-700';
+      case 'pending': return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+      case 'processing': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      case 'completed': return 'bg-green-500/20 text-green-400 border-green-500/30';
+      case 'failed': return 'bg-red-500/20 text-red-400 border-red-500/30';
+      default: return 'bg-slate-500/20 text-slate-400 border-slate-500/30';
     }
   };
 
   return (
-    <div className="space-y-4">
-      {/* Controls */}
-      <Card className="bg-gradient-to-r from-red-50 to-red-100 border-red-200">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg flex items-center text-red-800">
-            <X className="w-5 h-5 mr-2" />
-            Encerrar Aplicativos
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-gray-700">{runningApps.length} apps em execução</span>
-            <span className="text-gray-700">{selectedApps.length} selecionados</span>
-          </div>
+    <div className="space-y-6">
+      {/* Header with Search */}
+      <div className="relative">
+        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
+        <input
+          type="text"
+          placeholder="Encerrar aplicativos"
+          className="w-full bg-blue-600/20 border border-blue-500/30 rounded-2xl pl-12 pr-4 py-4 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50"
+          readOnly
+        />
+      </div>
 
-          <div className="flex space-x-2">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={selectAll}
-              className="flex-1"
-            >
-              <CheckSquare className="w-3 h-3 mr-1" />
-              Todos
-            </Button>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={clearSelection}
-              className="flex-1"
-            >
-              <Square className="w-3 h-3 mr-1" />
-              Limpar
-            </Button>
+      {/* Stats Card */}
+      <Card className="bg-gradient-to-r from-blue-600/10 to-slate-700/20 border-blue-500/30 rounded-2xl">
+        <CardContent className="p-6">
+          <div className="grid grid-cols-3 gap-4">
+            <div className="text-center">
+              <div className="flex items-center justify-center mb-2">
+                <Smartphone className="w-5 h-5 text-blue-400 mr-2" />
+                <span className="text-xs text-slate-300 uppercase tracking-wide">TOTAL</span>
+              </div>
+              <div className="text-2xl font-bold text-blue-400">{runningApps.length}</div>
+            </div>
+            <div className="text-center">
+              <div className="flex items-center justify-center mb-2">
+                <CheckSquare className="w-5 h-5 text-green-400 mr-2" />
+                <span className="text-xs text-slate-300 uppercase tracking-wide">SELECIONADOS</span>
+              </div>
+              <div className="text-2xl font-bold text-green-400">{selectedApps.length}</div>
+            </div>
+            <div className="text-center">
+              <div className="flex items-center justify-center mb-2">
+                <Minus className="w-5 h-5 text-red-400 mr-2" />
+                <span className="text-xs text-slate-300 uppercase tracking-wide">EXCEÇÕES</span>
+              </div>
+              <div className="text-2xl font-bold text-red-400">{runningApps.length - selectedApps.length}</div>
+            </div>
           </div>
-
-          <Button 
-            onClick={handleKillApps}
-            disabled={selectedApps.length === 0}
-            className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700"
-          >
-            <X className="w-4 h-4 mr-2" />
-            Encerrar Apps Selecionados ({selectedApps.length})
-          </Button>
         </CardContent>
       </Card>
 
+      {/* Action Buttons */}
+      <div className="grid grid-cols-2 gap-3">
+        <Button 
+          variant="outline" 
+          onClick={selectAll}
+          className="bg-slate-800/50 border-slate-600/50 text-slate-300 hover:bg-slate-700/50 hover:text-white"
+        >
+          <CheckSquare className="w-4 h-4 mr-2" />
+          Selecionar Todos
+        </Button>
+        <Button 
+          variant="outline" 
+          onClick={clearSelection}
+          className="bg-slate-800/50 border-slate-600/50 text-slate-300 hover:bg-slate-700/50 hover:text-white"
+        >
+          <Square className="w-4 h-4 mr-2" />
+          Limpar Seleção
+        </Button>
+      </div>
+
       {/* App List */}
-      <Card className="bg-white/80 border-gray-200">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg flex items-center text-gray-800">
-            📱 Apps em Execução
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
+      <Card className="bg-slate-800/30 border-slate-700/50 rounded-2xl">
+        <CardContent className="p-0">
           <ScrollArea className="max-h-[400px]">
-            <div className="space-y-3">
+            <div className="space-y-1 p-4">
               {runningApps.map((app) => (
                 <div 
                   key={app.id}
-                  className="flex items-center space-x-3 p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors"
+                  className="flex items-center justify-between p-4 rounded-xl bg-slate-800/40 hover:bg-slate-700/40 transition-all duration-200 border border-slate-700/30"
                 >
-                  <Checkbox 
-                    checked={selectedApps.includes(app.id)}
-                    onCheckedChange={() => toggleApp(app.id)}
-                  />
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center space-x-2 mb-1">
-                      <span className="text-lg">{app.icon}</span>
-                      <span className="font-medium text-sm truncate text-gray-800">{app.name}</span>
-                      <Badge className="bg-green-100 text-green-700 text-xs">
-                        Ativo
-                      </Badge>
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
+                      {app.icon}
                     </div>
-                    <div className="text-xs text-gray-500 truncate">
-                      {app.packageName}
+                    <div>
+                      <div className="font-medium text-white text-sm">{app.name}</div>
+                      <div className="text-xs text-slate-400 truncate max-w-48">
+                        {app.packageName}
+                      </div>
                     </div>
-                    <div className="flex items-center space-x-2 text-xs text-gray-500">
-                      <span>📦 {app.size}</span>
-                      <span>🕒 {app.lastUsed}</span>
+                  </div>
+                  
+                  <div className="flex items-center space-x-3">
+                    <div 
+                      className={`w-8 h-8 rounded-full flex items-center justify-center cursor-pointer transition-all duration-200 ${
+                        selectedApps.includes(app.id) 
+                          ? 'bg-red-500/20 border-2 border-red-500' 
+                          : 'bg-slate-700/50 border-2 border-slate-600'
+                      }`}
+                      onClick={() => toggleApp(app.id)}
+                    >
+                      {selectedApps.includes(app.id) ? (
+                        <Minus className="w-4 h-4 text-red-400" />
+                      ) : (
+                        <Check className="w-4 h-4 text-slate-400" />
+                      )}
                     </div>
                   </div>
                 </div>
@@ -170,34 +186,44 @@ export const KillAppsTab = ({ processingQueue, addToQueue }: KillAppsTabProps) =
         </CardContent>
       </Card>
 
+      {/* Execute Button */}
+      <Button 
+        onClick={handleKillApps}
+        disabled={selectedApps.length === 0}
+        className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-medium py-4 rounded-2xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <X className="w-5 h-5 mr-2" />
+        Encerrar Aplicativos Selecionados ({selectedApps.length})
+      </Button>
+
       {/* Processing Modal */}
       <Dialog open={showProcessingModal} onOpenChange={setShowProcessingModal}>
-        <DialogContent className="max-w-sm bg-white/95 backdrop-blur-md border-gray-200">
+        <DialogContent className="max-w-sm bg-slate-900/95 backdrop-blur-xl border-slate-700/50 rounded-2xl">
           <DialogHeader>
-            <DialogTitle className="text-lg flex items-center text-gray-800">
-              <X className="w-5 h-5 mr-2 text-red-600" />
+            <DialogTitle className="text-lg flex items-center text-white">
+              <X className="w-5 h-5 mr-2 text-red-500" />
               Encerrando Aplicativos
             </DialogTitle>
           </DialogHeader>
           
           <div className="space-y-4">
             <ScrollArea className="max-h-[300px]">
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {processingQueue.map((item) => (
                   <div 
                     key={item.id}
-                    className="flex items-center justify-between p-3 rounded-lg bg-gray-50"
+                    className="flex items-center justify-between p-3 rounded-xl bg-slate-800/50 border border-slate-700/30"
                   >
                     <div className="flex items-center space-x-3">
                       <span className="text-lg">{getStatusIcon(item.status)}</span>
                       <div>
-                        <div className="font-medium text-sm text-gray-800">{item.appName}</div>
-                        <div className="text-xs text-gray-500">
+                        <div className="font-medium text-sm text-white">{item.appName}</div>
+                        <div className="text-xs text-slate-400">
                           {item.command}
                         </div>
                       </div>
                     </div>
-                    <Badge className={getStatusColor(item.status)}>
+                    <Badge className={`${getStatusColor(item.status)} border`}>
                       {item.status}
                     </Badge>
                   </div>
@@ -206,7 +232,7 @@ export const KillAppsTab = ({ processingQueue, addToQueue }: KillAppsTabProps) =
             </ScrollArea>
             
             <div>
-              <div className="flex justify-between text-sm mb-2">
+              <div className="flex justify-between text-sm mb-2 text-slate-300">
                 <span>Progresso</span>
                 <span>
                   {processingQueue.filter(q => q.status === 'completed').length} / {processingQueue.length}
@@ -214,7 +240,7 @@ export const KillAppsTab = ({ processingQueue, addToQueue }: KillAppsTabProps) =
               </div>
               <Progress 
                 value={(processingQueue.filter(q => q.status === 'completed').length / processingQueue.length) * 100}
-                className="h-2"
+                className="h-2 bg-slate-700"
               />
             </div>
           </div>

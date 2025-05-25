@@ -40,88 +40,86 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-4">
       <div className="max-w-md mx-auto">
         {/* Header */}
-        <div className="text-center mb-6">
-          <div className="flex items-center justify-center mb-2">
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg mr-3 flex items-center justify-center shadow-lg">
-              <span className="text-white font-bold">⚡</span>
-            </div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
-              App Tools
-            </h1>
-          </div>
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-white mb-2">
+            App Tools
+          </h1>
           <p className="text-slate-400 text-sm">
             Advanced Android Management System
           </p>
         </div>
 
-        {/* Main Content */}
-        <Card className="bg-slate-900/80 backdrop-blur-sm border-slate-700 shadow-xl">
-          <Tabs defaultValue="home" className="w-full">
-            <TabsList className="grid w-full grid-cols-4 bg-slate-800/80 backdrop-blur-sm border-slate-700">
+        {/* Main Content Card */}
+        <Card className="bg-slate-900/90 backdrop-blur-xl border-slate-700/50 shadow-2xl overflow-hidden">
+          <Tabs defaultValue="kill" className="w-full">
+            {/* Tab Navigation */}
+            <TabsList className="grid w-full grid-cols-4 bg-slate-800/50 backdrop-blur-sm border-b border-slate-700/50 rounded-none h-16 p-0">
               <TabsTrigger 
                 value="home" 
-                className="text-xs data-[state=active]:bg-slate-700 data-[state=active]:text-blue-400 data-[state=active]:shadow-sm text-slate-400 hover:text-slate-200"
+                className="flex flex-col items-center gap-1 h-full text-xs font-medium data-[state=active]:bg-blue-600/20 data-[state=active]:text-blue-400 data-[state=active]:border-b-2 data-[state=active]:border-blue-400 text-slate-400 hover:text-slate-200 rounded-none border-b-2 border-transparent transition-all duration-200"
               >
-                <Home className="w-4 h-4 mr-1" />
-                Home
+                <Home className="w-5 h-5" />
+                <span>HOME</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="kill" 
-                className="text-xs data-[state=active]:bg-slate-700 data-[state=active]:text-red-400 data-[state=active]:shadow-sm text-slate-400 hover:text-slate-200"
+                className="flex flex-col items-center gap-1 h-full text-xs font-medium data-[state=active]:bg-red-600/20 data-[state=active]:text-red-400 data-[state=active]:border-b-2 data-[state=active]:border-red-400 text-slate-400 hover:text-slate-200 rounded-none border-b-2 border-transparent transition-all duration-200"
               >
-                <X className="w-4 h-4 mr-1" />
-                Kill
+                <X className="w-5 h-5" />
+                <span>ENCERRAR APPS</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="cache" 
-                className="text-xs data-[state=active]:bg-slate-700 data-[state=active]:text-blue-400 data-[state=active]:shadow-sm text-slate-400 hover:text-slate-200"
+                className="flex flex-col items-center gap-1 h-full text-xs font-medium data-[state=active]:bg-purple-600/20 data-[state=active]:text-purple-400 data-[state=active]:border-b-2 data-[state=active]:border-purple-400 text-slate-400 hover:text-slate-200 rounded-none border-b-2 border-transparent transition-all duration-200"
               >
-                <Trash2 className="w-4 h-4 mr-1" />
-                Cache
+                <Trash2 className="w-5 h-5" />
+                <span>LIMPAR CACHES</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="settings" 
-                className="text-xs data-[state=active]:bg-slate-700 data-[state=active]:text-slate-200 data-[state=active]:shadow-sm text-slate-400 hover:text-slate-200"
+                className="flex flex-col items-center gap-1 h-full text-xs font-medium data-[state=active]:bg-green-600/20 data-[state=active]:text-green-400 data-[state=active]:border-b-2 data-[state=active]:border-green-400 text-slate-400 hover:text-slate-200 rounded-none border-b-2 border-transparent transition-all duration-200"
               >
-                <Settings className="w-4 h-4 mr-1" />
-                Config
+                <Settings className="w-5 h-5" />
+                <span>CONFIGURAÇÕES</span>
               </TabsTrigger>
             </TabsList>
 
-            <div className="p-4">
-              <TabsContent value="home" className="m-0">
+            {/* Tab Content */}
+            <div className="bg-slate-900/50">
+              <TabsContent value="home" className="m-0 p-6">
                 <HomeTab addToQueue={addToQueue} />
               </TabsContent>
 
-              <TabsContent value="kill" className="m-0">
+              <TabsContent value="kill" className="m-0 p-6">
                 <KillAppsTab 
                   processingQueue={processingQueue.filter(q => q.type === 'kill')} 
                   addToQueue={addToQueue}
                 />
               </TabsContent>
 
-              <TabsContent value="cache" className="m-0">
+              <TabsContent value="cache" className="m-0 p-6">
                 <ClearCacheTab 
                   processingQueue={processingQueue.filter(q => q.type === 'cache')} 
                   addToQueue={addToQueue}
                 />
               </TabsContent>
 
-              <TabsContent value="settings" className="m-0">
+              <TabsContent value="settings" className="m-0 p-6">
                 <SettingsTab />
               </TabsContent>
             </div>
           </Tabs>
         </Card>
 
-        {/* Status Bar */}
-        <div className="mt-4 text-center">
-          <div className="inline-flex items-center space-x-2 bg-slate-800/60 backdrop-blur-sm px-3 py-1 rounded-full text-xs shadow-sm border border-slate-700">
+        {/* Connection Status */}
+        <div className="mt-6 text-center">
+          <div className="inline-flex items-center space-x-3 bg-slate-800/80 backdrop-blur-sm px-4 py-2 rounded-full border border-slate-700/50">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <span className="text-slate-300">ADB Connected</span>
+            <span className="text-slate-300 text-sm font-medium">ADB Connected</span>
+            <span className="text-slate-500 text-xs">192.168.1.100:5555</span>
           </div>
         </div>
       </div>

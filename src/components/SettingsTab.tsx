@@ -6,6 +6,21 @@ import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Slider } from '@/components/ui/slider';
+import { 
+  Wifi, 
+  Bell, 
+  Shield, 
+  Zap, 
+  Battery, 
+  Search, 
+  Settings, 
+  Smartphone, 
+  HardDrive, 
+  Clock, 
+  Download, 
+  RotateCcw,
+  Bug
+} from 'lucide-react';
 
 export const SettingsTab = () => {
   const [settings, setSettings] = useState({
@@ -53,26 +68,38 @@ export const SettingsTab = () => {
     };
     
     console.log('Exporting settings:', settingsData);
-    // Simular download do arquivo
     alert('Configurações exportadas! (simulado)');
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
+      {/* Header with Search */}
+      <div className="relative">
+        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
+        <input
+          type="text"
+          placeholder="Configurações"
+          className="w-full bg-green-600/20 border border-green-500/30 rounded-2xl pl-12 pr-4 py-4 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50"
+          readOnly
+        />
+      </div>
+
       {/* Connection Status */}
-      <Card className="bg-gradient-to-r from-green-500/10 to-cyan-500/10 border-green-500/30">
-        <CardContent className="pt-4">
+      <Card className="bg-gradient-to-r from-green-600/10 to-slate-700/20 border-green-500/30 rounded-2xl">
+        <CardContent className="p-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
+                <Wifi className="w-6 h-6 text-white" />
+              </div>
               <div>
-                <div className="font-medium text-sm">ADB Conectado</div>
-                <div className="text-xs text-muted-foreground">
+                <div className="font-medium text-white text-lg">ADB Conectado</div>
+                <div className="text-sm text-slate-400">
                   192.168.1.100:5555
                 </div>
               </div>
             </div>
-            <Badge className="bg-green-500/20 text-green-400">
+            <Badge className="bg-green-500/20 text-green-400 border border-green-500/30 px-3 py-1">
               Online
             </Badge>
           </div>
@@ -80,85 +107,94 @@ export const SettingsTab = () => {
       </Card>
 
       {/* Automation Settings */}
-      <Card className="bg-card/80 border-border/50">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg flex items-center">
-            🤖 Automação
+      <Card className="bg-slate-800/30 border-slate-700/50 rounded-2xl">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-lg flex items-center text-white">
+            <Zap className="w-5 h-5 mr-3 text-yellow-400" />
+            Automação
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
+        <CardContent className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <Clock className="w-5 h-5 text-blue-400" />
               <div>
-                <div className="font-medium text-sm">Limpeza Automática</div>
-                <div className="text-xs text-muted-foreground">
+                <div className="font-medium text-sm text-white">Limpeza Automática</div>
+                <div className="text-xs text-slate-400">
                   Executa limpeza em intervalos regulares
                 </div>
               </div>
-              <Switch 
-                checked={settings.autoCleanEnabled}
-                onCheckedChange={() => toggleSetting('autoCleanEnabled')}
-              />
             </div>
+            <Switch 
+              checked={settings.autoCleanEnabled}
+              onCheckedChange={() => toggleSetting('autoCleanEnabled')}
+            />
+          </div>
 
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span>Intervalo de Limpeza</span>
-                <span>{cleanInterval[0]}h</span>
-              </div>
-              <Slider
-                value={cleanInterval}
-                onValueChange={setCleanInterval}
-                max={24}
-                min={1}
-                step={1}
-                className="w-full"
-              />
+          <div className="space-y-3">
+            <div className="flex justify-between text-sm text-slate-300">
+              <span>Intervalo de Limpeza</span>
+              <span className="text-blue-400">{cleanInterval[0]}h</span>
             </div>
+            <Slider
+              value={cleanInterval}
+              onValueChange={setCleanInterval}
+              max={24}
+              min={1}
+              step={1}
+              className="w-full"
+            />
+          </div>
 
-            <Separator />
+          <Separator className="bg-slate-700/50" />
 
-            <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <Wifi className="w-5 h-5 text-green-400" />
               <div>
-                <div className="font-medium text-sm">Auto Conectar ADB</div>
-                <div className="text-xs text-muted-foreground">
+                <div className="font-medium text-sm text-white">Auto Conectar ADB</div>
+                <div className="text-xs text-slate-400">
                   Conecta automaticamente ao iniciar
                 </div>
               </div>
-              <Switch 
-                checked={settings.autoConnectADB}
-                onCheckedChange={() => toggleSetting('autoConnectADB')}
-              />
             </div>
+            <Switch 
+              checked={settings.autoConnectADB}
+              onCheckedChange={() => toggleSetting('autoConnectADB')}
+            />
+          </div>
 
-            <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <Smartphone className="w-5 h-5 text-red-400" />
               <div>
-                <div className="font-medium text-sm">Encerrar Apps Automaticamente</div>
-                <div className="text-xs text-muted-foreground">
+                <div className="font-medium text-sm text-white">Encerrar Apps Automaticamente</div>
+                <div className="text-xs text-slate-400">
                   Apps inativos por mais de 2h
                 </div>
               </div>
-              <Switch 
-                checked={settings.autoKillApps}
-                onCheckedChange={() => toggleSetting('autoKillApps')}
-              />
             </div>
+            <Switch 
+              checked={settings.autoKillApps}
+              onCheckedChange={() => toggleSetting('autoKillApps')}
+            />
           </div>
         </CardContent>
       </Card>
 
       {/* Performance Settings */}
-      <Card className="bg-card/80 border-border/50">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg flex items-center">
-            ⚡ Performance
+      <Card className="bg-slate-800/30 border-slate-700/50 rounded-2xl">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-lg flex items-center text-white">
+            <Zap className="w-5 h-5 mr-3 text-orange-400" />
+            Performance
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <div className="flex justify-between text-sm">
+        <CardContent className="space-y-6">
+          <div className="space-y-3">
+            <div className="flex justify-between text-sm text-slate-300">
               <span>Limite de Cache Automático</span>
-              <span>{maxCacheSize[0]}MB</span>
+              <span className="text-purple-400">{maxCacheSize[0]}MB</span>
             </div>
             <Slider
               value={maxCacheSize}
@@ -170,13 +206,16 @@ export const SettingsTab = () => {
             />
           </div>
 
-          <Separator />
+          <Separator className="bg-slate-700/50" />
 
           <div className="flex items-center justify-between">
-            <div>
-              <div className="font-medium text-sm">Modo Seguro</div>
-              <div className="text-xs text-muted-foreground">
-                Protege apps do sistema
+            <div className="flex items-center space-x-3">
+              <Shield className="w-5 h-5 text-green-400" />
+              <div>
+                <div className="font-medium text-sm text-white">Modo Seguro</div>
+                <div className="text-xs text-slate-400">
+                  Protege apps do sistema
+                </div>
               </div>
             </div>
             <Switch 
@@ -186,10 +225,13 @@ export const SettingsTab = () => {
           </div>
 
           <div className="flex items-center justify-between">
-            <div>
-              <div className="font-medium text-sm">Varredura Profunda</div>
-              <div className="text-xs text-muted-foreground">
-                Analisa arquivos temporários
+            <div className="flex items-center space-x-3">
+              <HardDrive className="w-5 h-5 text-blue-400" />
+              <div>
+                <div className="font-medium text-sm text-white">Varredura Profunda</div>
+                <div className="text-xs text-slate-400">
+                  Analisa arquivos temporários
+                </div>
               </div>
             </div>
             <Switch 
@@ -199,10 +241,13 @@ export const SettingsTab = () => {
           </div>
 
           <div className="flex items-center justify-between">
-            <div>
-              <div className="font-medium text-sm">Modo Bateria Baixa</div>
-              <div className="text-xs text-muted-foreground">
-                Reduz operações quando bateria &lt; 20%
+            <div className="flex items-center space-x-3">
+              <Battery className="w-5 h-5 text-amber-400" />
+              <div>
+                <div className="font-medium text-sm text-white">Modo Bateria Baixa</div>
+                <div className="text-xs text-slate-400">
+                  Reduz operações quando bateria &lt; 20%
+                </div>
               </div>
             </div>
             <Switch 
@@ -214,18 +259,22 @@ export const SettingsTab = () => {
       </Card>
 
       {/* System Settings */}
-      <Card className="bg-card/80 border-border/50">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg flex items-center">
-            🔧 Sistema
+      <Card className="bg-slate-800/30 border-slate-700/50 rounded-2xl">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-lg flex items-center text-white">
+            <Settings className="w-5 h-5 mr-3 text-slate-400" />
+            Sistema
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-6">
           <div className="flex items-center justify-between">
-            <div>
-              <div className="font-medium text-sm">Notificações</div>
-              <div className="text-xs text-muted-foreground">
-                Alertas de limpeza e status
+            <div className="flex items-center space-x-3">
+              <Bell className="w-5 h-5 text-blue-400" />
+              <div>
+                <div className="font-medium text-sm text-white">Notificações</div>
+                <div className="text-xs text-slate-400">
+                  Alertas de limpeza e status
+                </div>
               </div>
             </div>
             <Switch 
@@ -235,10 +284,13 @@ export const SettingsTab = () => {
           </div>
 
           <div className="flex items-center justify-between">
-            <div>
-              <div className="font-medium text-sm">Modo Debug</div>
-              <div className="text-xs text-muted-foreground">
-                Logs detalhados para desenvolvimento
+            <div className="flex items-center space-x-3">
+              <Bug className="w-5 h-5 text-red-400" />
+              <div>
+                <div className="font-medium text-sm text-white">Modo Debug</div>
+                <div className="text-xs text-slate-400">
+                  Logs detalhados para desenvolvimento
+                </div>
               </div>
             </div>
             <Switch 
@@ -250,57 +302,54 @@ export const SettingsTab = () => {
       </Card>
 
       {/* Actions */}
-      <Card className="bg-gradient-to-r from-tech-300/20 to-tech-400/20 border-tech-500/30">
-        <CardContent className="pt-4">
-          <div className="grid grid-cols-2 gap-3">
-            <Button 
-              variant="outline"
-              onClick={exportSettings}
-              className="flex items-center space-x-2"
-            >
-              <span>📤</span>
-              <span>Exportar</span>
-            </Button>
-            <Button 
-              variant="outline"
-              onClick={resetSettings}
-              className="flex items-center space-x-2"
-            >
-              <span>🔄</span>
-              <span>Reset</span>
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="grid grid-cols-2 gap-4">
+        <Button 
+          variant="outline"
+          onClick={exportSettings}
+          className="flex items-center justify-center space-x-2 bg-slate-800/50 border-slate-600/50 text-slate-300 hover:bg-slate-700/50 hover:text-white py-3 rounded-xl"
+        >
+          <Download className="w-4 h-4" />
+          <span>Exportar</span>
+        </Button>
+        <Button 
+          variant="outline"
+          onClick={resetSettings}
+          className="flex items-center justify-center space-x-2 bg-slate-800/50 border-slate-600/50 text-slate-300 hover:bg-slate-700/50 hover:text-white py-3 rounded-xl"
+        >
+          <RotateCcw className="w-4 h-4" />
+          <span>Reset</span>
+        </Button>
+      </div>
 
       {/* System Info */}
-      <Card className="bg-gradient-to-r from-tech-200/30 to-tech-300/30 border-tech-400/30">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg flex items-center">
-            📊 Informações do Sistema
+      <Card className="bg-gradient-to-r from-slate-800/40 to-slate-700/40 border-slate-600/50 rounded-2xl">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-lg flex items-center text-white">
+            <Smartphone className="w-5 h-5 mr-3 text-cyan-400" />
+            Informações do Sistema
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-3 text-sm">
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Versão App Tools</span>
-              <span className="font-mono">v2.1.0</span>
+          <div className="space-y-4 text-sm">
+            <div className="flex justify-between items-center">
+              <span className="text-slate-400">Versão App Tools</span>
+              <span className="font-mono text-white bg-slate-700/50 px-2 py-1 rounded">v2.1.0</span>
             </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">ADB Version</span>
-              <span className="font-mono">1.0.41</span>
+            <div className="flex justify-between items-center">
+              <span className="text-slate-400">ADB Version</span>
+              <span className="font-mono text-white bg-slate-700/50 px-2 py-1 rounded">1.0.41</span>
             </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Device API</span>
-              <span className="font-mono">Android 13 (API 33)</span>
+            <div className="flex justify-between items-center">
+              <span className="text-slate-400">Device API</span>
+              <span className="font-mono text-white bg-slate-700/50 px-2 py-1 rounded">Android 13 (API 33)</span>
             </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Comandos Executados</span>
-              <span className="font-mono">1,247</span>
+            <div className="flex justify-between items-center">
+              <span className="text-slate-400">Comandos Executados</span>
+              <span className="font-mono text-green-400 bg-slate-700/50 px-2 py-1 rounded">1,247</span>
             </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Cache Limpo</span>
-              <span className="font-mono">15.6 GB</span>
+            <div className="flex justify-between items-center">
+              <span className="text-slate-400">Cache Limpo</span>
+              <span className="font-mono text-purple-400 bg-slate-700/50 px-2 py-1 rounded">15.6 GB</span>
             </div>
           </div>
         </CardContent>
