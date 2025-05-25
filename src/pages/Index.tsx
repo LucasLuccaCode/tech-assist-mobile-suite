@@ -7,6 +7,7 @@ import { KillAppsTab } from '@/components/KillAppsTab';
 import { ClearCacheTab } from '@/components/ClearCacheTab';
 import { SettingsTab } from '@/components/SettingsTab';
 import { ProcessingQueue } from '@/types/app';
+import { Home, X, Trash2, Settings } from 'lucide-react';
 
 const Index = () => {
   const [processingQueue, setProcessingQueue] = useState<ProcessingQueue[]>([]);
@@ -39,50 +40,54 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
+    <div className="min-h-screen bg-slate-950 p-4">
       <div className="max-w-md mx-auto">
         {/* Header */}
         <div className="text-center mb-6">
           <div className="flex items-center justify-center mb-2">
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg mr-3 flex items-center justify-center shadow-lg">
+            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg mr-3 flex items-center justify-center shadow-lg">
               <span className="text-white font-bold">⚡</span>
             </div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
               App Tools
             </h1>
           </div>
-          <p className="text-gray-600 text-sm">
+          <p className="text-slate-400 text-sm">
             Advanced Android Management System
           </p>
         </div>
 
         {/* Main Content */}
-        <Card className="bg-white/90 backdrop-blur-sm border-gray-200 shadow-xl">
+        <Card className="bg-slate-900/80 backdrop-blur-sm border-slate-700 shadow-xl">
           <Tabs defaultValue="home" className="w-full">
-            <TabsList className="grid w-full grid-cols-4 bg-gray-100/80 backdrop-blur-sm">
+            <TabsList className="grid w-full grid-cols-4 bg-slate-800/80 backdrop-blur-sm border-slate-700">
               <TabsTrigger 
                 value="home" 
-                className="text-xs data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm"
+                className="text-xs data-[state=active]:bg-slate-700 data-[state=active]:text-blue-400 data-[state=active]:shadow-sm text-slate-400 hover:text-slate-200"
               >
-                🏠 Home
+                <Home className="w-4 h-4 mr-1" />
+                Home
               </TabsTrigger>
               <TabsTrigger 
                 value="kill" 
-                className="text-xs data-[state=active]:bg-white data-[state=active]:text-red-600 data-[state=active]:shadow-sm"
+                className="text-xs data-[state=active]:bg-slate-700 data-[state=active]:text-red-400 data-[state=active]:shadow-sm text-slate-400 hover:text-slate-200"
               >
-                🔄 Kill
+                <X className="w-4 h-4 mr-1" />
+                Kill
               </TabsTrigger>
               <TabsTrigger 
                 value="cache" 
-                className="text-xs data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm"
+                className="text-xs data-[state=active]:bg-slate-700 data-[state=active]:text-blue-400 data-[state=active]:shadow-sm text-slate-400 hover:text-slate-200"
               >
-                🧹 Cache
+                <Trash2 className="w-4 h-4 mr-1" />
+                Cache
               </TabsTrigger>
               <TabsTrigger 
                 value="settings" 
-                className="text-xs data-[state=active]:bg-white data-[state=active]:text-gray-700 data-[state=active]:shadow-sm"
+                className="text-xs data-[state=active]:bg-slate-700 data-[state=active]:text-slate-200 data-[state=active]:shadow-sm text-slate-400 hover:text-slate-200"
               >
-                ⚙️ Config
+                <Settings className="w-4 h-4 mr-1" />
+                Config
               </TabsTrigger>
             </TabsList>
 
@@ -114,9 +119,9 @@ const Index = () => {
 
         {/* Status Bar */}
         <div className="mt-4 text-center">
-          <div className="inline-flex items-center space-x-2 bg-white/60 backdrop-blur-sm px-3 py-1 rounded-full text-xs shadow-sm border border-gray-200">
+          <div className="inline-flex items-center space-x-2 bg-slate-800/60 backdrop-blur-sm px-3 py-1 rounded-full text-xs shadow-sm border border-slate-700">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <span className="text-gray-700">ADB Connected</span>
+            <span className="text-slate-300">ADB Connected</span>
           </div>
         </div>
       </div>
