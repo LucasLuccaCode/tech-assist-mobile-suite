@@ -17,6 +17,7 @@ export interface ScheduledClean {
   schedule: string;
   enabled: boolean;
   selectedApps: string[];
+  days?: string[];
 }
 
 export interface ProcessingQueue {

@@ -70,7 +70,17 @@ export const HomeTab = ({ addToQueue }: HomeTabProps) => {
   };
 
   const handleScheduleCreate = (newSchedule: any) => {
-    setSchedules(prev => [...prev, newSchedule]);
+    const formattedSchedule = {
+      id: newSchedule.id,
+      name: newSchedule.name,
+      type: newSchedule.killApps && newSchedule.clearCache ? 'both' : 
+            newSchedule.killApps ? 'apps' : 'cache',
+      schedule: newSchedule.time,
+      enabled: newSchedule.enabled,
+      selectedApps: [...(newSchedule.selectedKillApps || []), ...(newSchedule.selectedCacheApps || [])],
+      days: newSchedule.days || []
+    };
+    setSchedules(prev => [...prev, formattedSchedule]);
   };
 
   const getStatusColor = (enabled: boolean) => 
@@ -85,7 +95,7 @@ export const HomeTab = ({ addToQueue }: HomeTabProps) => {
     }
   };
 
-  const formatDays = (days: string[]) => {
+  const formatDays = (days: string[] = []) => {
     const dayMap: { [key: string]: string } = {
       'mon': 'Seg', 'tue': 'Ter', 'wed': 'Qua', 'thu': 'Qui',
       'fri': 'Sex', 'sat': 'Sáb', 'sun': 'Dom'
@@ -192,10 +202,10 @@ export const HomeTab = ({ addToQueue }: HomeTabProps) => {
                         <Clock className="w-3 h-3" />
                         <span>{schedule.schedule}</span>
                       </div>
-                      {schedule.days && (
+                      {schedule.days && schedule.days.length > 0 && (
                         <div>Dias: {formatDays(schedule.days)}</div>
                       )}
-                      <div>{schedule.selectedApps.length} apps selecionados</div>
+                      <div>{(schedule.selectedApps || []).length} apps selecionados</div>
                     </div>
                   </div>
                   <Switch 
